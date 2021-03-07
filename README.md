@@ -391,4 +391,58 @@ The container is an outline widget that surrounds the main widget. We can provid
 
 This method will create a drawer and will also create buttons with which we can navigate to the other pages of the application. 
 
+-Data Transfer to the Database-
+
+To begin reading and streaming of data from the firebase database we will need to use the following method.
+
+>final dataDist = FirebaseDatabase.instance.reference();
+
+This method will link us to a current latest version of the firebase real-time database and allow us to stream and record data. Next we will create a methods that when called takes a snapshot of the data on the firebase database and provides us with the appropriate values as required.
+
+>dataDist.once().then((DataSnapshot dataSnapshot){
+      Map<String,dynamic> myMap = new Map<String,dynamic>.from(dataSnapshot.value);
+      
+
+This snapshot then needs to be broken down and then converted into strings and double formats thereby providing us with appropriate values that can be applied by the circular percent indicators.
+
+>double data3 = myMap['distance3']/100;
+      double data1 = myMap['distance1']/100;
+      double data2 = myMap['distance2']/5;
+
+Once we convert the data into double values it becomes much easier to manage the data and display it as the circular percent indicator requires data inputs to be in the form of percentage of the original value we convert the data as required
+
+>d1 = (lith*100).toString();
+      d2 = (data2*5).toString();
+      d3 = (neo*100).toString();
+
+After we convert the data we can also display it by converting the percentage data back into strings from double value and allows us to the use this data for further applications.
+
+-scanner addon-
+To add data to the list view on the data page we have the firebase database but to manually add items to the list we can have an additional methods that involves scanning tagged items that are induced with specific QR or barcode and allowing them to be added to the list view. To do so we need to create a scanning method that will use the devices camera as a scanner. After we position the scanner page and we give it a basic layout we can code in the scanner by using the following method.
+
+>Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() => this.barcode = barcode);
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          this.barcode = 'User did not grant the camera permission!';
+        });
+      } else {
+	  setState(() => this.barcode = 'Unknown error: $e');
+      }
+    } on FormatException{
+      setState(() => this.barcode = 'user returned without input');
+    } catch (e) {
+      setState(() => this.barcode = 'Unknown error: $e');
+    }
+    return barcode;
+  } 
+After this we link all the pages together using the navigator command lines and the application will be ready for debugging and compiling. We use the following commands from the navigator command set.
+
+>Navigator.push(context, MaterialPageRoute(builder: (context) => ScanScreen()));
+
+We can modify the above command line as per our requirement and create multiple page routes.
+
 			
