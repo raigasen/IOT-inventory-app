@@ -137,4 +137,48 @@ Firebase Storage was designed for application developers who need to store and s
 
 Firebase Storage is upheld by Google Cloud Storage, a capable, basic and cost-effective object storage service [2]. And because of cloud storage we need not migrate to any other provider as the storage scales automatically.
 
-After this we need to set up the database. In real-time database we need to edit the default rules to suit our needs. These rules as mentioned before give permissions to developers to read and write. An API is provided to the application developer which allows application data to be synchronized across clients and stored on Firebase's cloud [4]. Lastly in the usage tab we can observe the usage statistics of the users and provide modifications when needed. The data stored is highly secured and is robust in nature means it resumes from the last point if any network error occurs [4]. After setting up everything we are done with the online database Phase for now. The connection of the application to the database will be covered in the next section.
+After this we need to set up the database. In real-time database we need to edit the default rules to suit our needs. These rules as mentioned before give permissions to developers to read and write. An API is provided to the application developer which allows application data to be synchronized across clients and stored on Firebase's cloud [4]. Lastly in the usage tab we can observe the usage statistics of the users and provide modifications when needed. The data stored is highly secured and is robust in nature means it resumes from the last point if any network error occurs [4].
+
+For the development of the mobile application that can be very easily accessible as it would be based upon android OS. We will be using the Android Studio IDE for the development. We choose the android OS as it is more widely used and very easily accessible on various devices. It is also very easy to code, manage and update. It is also important to have JAVA installed on your development computer as it is required in some phases that will be discussed later in the upcoming parts. Flutter is an open-source UI software development kit created by Google.
+
+
+First, we need to locate the SHA-1 and SHA-256 keys that are present in your java directory. SHA-1 is a unique key generated for your PC that can be used for signing/ it is mainly used for submitting the Google API in case of android. Every system with an active JDK installed on it will have a unique SHA-1 and SHA-256 key present. To obtain these keys we need to find the JDK directory in our system and open command prompt in that directory space. After doing so we need to input the following command:
+
+key tool -exportcert -alias androiddebugkey -keystore [PATH_TO_.DIRECTORY] –listv
+
+Upon replacing [PATH_TO_DIRECTORY] with the path present in your system we should be able to run the terminal command. In some cases you will be prompted with a password which you can enter (usually android) after which you the list of certificates will be printed on the screen. After this you can simply copy and paste the SHA-1 and SHA-256 keys in a separate word document or a notepad file
+
+Next we need to specify an app file on the firebase page. This will be the link between our android application and our Firebase database. After making the app on firebase we provide a package name and note this package name in a doc as we will need to use the same package name for the application as well. Once we are done we will be required to download and save the google-services.json file in the root folder of your application development directory.
+
+As we already have a backend due to the firebase database we are not required to specifically create a backend in the application so we can prevent a lot of complications in this phase. Now we need to add the required repositories and dependencies so that we can use the required functions and processes. Flutter has developed different dependencies that reduce the workload of generating extended process by just probating them as simple functions. When integrated with Firebase Authentication, developers can define who has access to what data, and how they can access it [8]. Then all we need to do is just call these functions to use the embedded processes. This makes the length of the code much shorter and is also much more helpful in debugging and post processing of the code. As the processes and embedded into the required functions they can be called repeatedly without the need to write the entire process over again. This again further simplifies the code although the processing is a bit more tedious, but due to our app being only front end it will not affect a lot.
+
+-Repositories and Dependancies used-
+
+The following repositories were used in the project:
+
+>cupertino_icons: ^0.1.2 – This is a repository which contains the default set of icons and assets that are required to make the user interface for the application.
+>firebase_auth: ^0.15.4 – This is a futter plugin to use the Firebase Authenticaton API.
+>firebase_database: ^3.1.1 – This is a flutter pugin to use the Firebase Realtime Database API.
+>google_sign_in: ^4.1.1 – This is a flutter plugin for Google Sign In.
+>provider: ^4.0.4 – 
+>firebase_core: ^0.4.4 – This plugin enables the Flutter plugin to uses the Firebase Core API, which allows connections to multiple firebase applications.
+>firebase:^7.2.1 – This package provides three libraries :
+	-package:firebase/firebase.dart
+	- package:firebase/firestore.dart
+	- package:firebase/firebase_io.dart
+>intl: ^0.15.8 – This package provides the internationalization and localization facilities like message translation, plurals and genders, date/time/number formatting and so on.
+>percent_indicator: ^2.1.1 – This Package provides us with circular and linear percent indicators as a function.
+>qr_flutter: ^3.2.0 – This is a simple library for simple and fast QR rendering via a widget/custom painter.
+>barcode_scan: ^2.0.1 – Another simple library for barcode rendering.
+>path_provider: ^1.6.4 – Flutter plugin for locating commonly used locations on the filesystem on android as well as IOS.
+
+The following dependencies were used in the project:
+
+>org.jetbrains.kotlin:kotlin-stdlib-jdk7  
+>com.google.firebase:firebase-database:19.2.1
+>com.google.firebase:firebase-database
+>junit:junit:4.12
+>androidx.test:runner:1.1.1
+>androidx.test.espresso:espresso-core:3.1.1
+>com.google.gms.google-services
+
