@@ -158,29 +158,47 @@ As we already have a backend due to the firebase database we are not required to
 The following repositories were used in the project:
 
 >cupertino_icons: ^0.1.2 – This is a repository which contains the default set of icons and assets that are required to make the user interface for the application.
+
 >firebase_auth: ^0.15.4 – This is a futter plugin to use the Firebase Authenticaton API.
+
 >firebase_database: ^3.1.1 – This is a flutter pugin to use the Firebase Realtime Database API.
+
 >google_sign_in: ^4.1.1 – This is a flutter plugin for Google Sign In.
+
 >provider: ^4.0.4 – 
+
 >firebase_core: ^0.4.4 – This plugin enables the Flutter plugin to uses the Firebase Core API, which allows connections to multiple firebase applications.
+
 >firebase:^7.2.1 – This package provides three libraries :
 	-package:firebase/firebase.dart
 	- package:firebase/firestore.dart
 	- package:firebase/firebase_io.dart
+	
 >intl: ^0.15.8 – This package provides the internationalization and localization facilities like message translation, plurals and genders, date/time/number formatting and so on.
+
 >percent_indicator: ^2.1.1 – This Package provides us with circular and linear percent indicators as a function.
+
 >qr_flutter: ^3.2.0 – This is a simple library for simple and fast QR rendering via a widget/custom painter.
+
 >barcode_scan: ^2.0.1 – Another simple library for barcode rendering.
+
 >path_provider: ^1.6.4 – Flutter plugin for locating commonly used locations on the filesystem on android as well as IOS.
+
 
 The following dependencies were used in the project:
 
 >org.jetbrains.kotlin:kotlin-stdlib-jdk7  
+
 >com.google.firebase:firebase-database:19.2.1
+
 >com.google.firebase:firebase-database
+
 >junit:junit:4.12
+
 >androidx.test:runner:1.1.1
+
 >androidx.test.espresso:espresso-core:3.1.1
+
 >com.google.gms.google-services
 
 -Flutter(Application Design)-
@@ -291,3 +309,86 @@ When the Log in method returns true the above method will push the page in view 
 -Data Page-
 
 For the data page we will have a decent UI made up of circular progress indicators and Bar Progress indicators. As a repository for these types of indicators is already available there is no need to create them from scratch using the paint creator methods. We can simply add the repository can call these functions to use them. As this page will be a little more complex as compared to the other pages we will need to plan the design properly or else the system will not be able to compile the application due to the parameters not being aligned properly with the desired screen size if this occurs there will be a red screen showing the error code and description on the device. First we need to set up a basic layout of the page
+
+>return MaterialApp(home: Scaffold(
+      appBar:  AppBar(title: Text('Datapage'),),
+      body: ListView(
+	Container(
+            height: 1,
+            color: Colors.grey,
+          ), //divider
+	Container(
+            height: 110,
+            child: Row(
+                children:[
+                  Container(
+                      width: 350,
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      child: Text('Container 2',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 30
+                        ),
+                      )
+                  ),
+                  CircularPercentIndicator(
+                    progressColor: Colors.amber,
+                    percent: meso,
+                    animation: true,
+                    radius: 100,
+		    lineWidth: 10,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    center: Text(d2),
+                  ),	
+                ]
+            )
+          ),
+
+
+The container is an outline widget that surrounds the main widget. We can provide specifications to the container by tweaking its property values. Inside the container we will have a second contaioner that will contain the label of the quantity under measure. Outside that container we will have the circular progress indicator method to keep track of the values and proportions. To position these widgets properly we can provide edge insets that will allow us to accurately position all the widgets properly with respect to the screen. These methods can be repeated multiple times as per the required amount to display all the data over the application. 
+
+>Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children:  <Widget>[
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                  ),
+                  child: Text(
+                    'Drawer Header',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.message),
+			title: Text('Messages'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.account_circle),
+                  title: Text('Profile'),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:(context) => ProfileScreen(),
+                      )
+                    ); // close the drawer
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.center_focus_weak),
+                  title: Text('scan'),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (context) => ScanScreen(),
+                        )
+
+This method will create a drawer and will also create buttons with which we can navigate to the other pages of the application. 
+
+			
