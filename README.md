@@ -119,6 +119,7 @@ void wait()
 
 _______________________________________________________________________________________________________________________________________________________________________________
 -SOFTWARE-
+_______________________________________________________________________________________________________________________________________________________________________________
 
 To reduce the load on the mobile application development we choose Firebase as a Mobile Backend. Firebase is a complete Package of products that allows one to build web and mobile apps. Firebase offers MBaaS or Mobile Backend as a Service and offers a method to link web and mobile applications to a cloud based backend storage and API.
 Data is stored as JSON and synchronized continuously to each associated client. When any cross-platform application is developed with iOS, Android, and JavaScript SDKs, the greater part of the user’s demand is based on one Real-time database instance and this instance gets updated with each new data[2]. Firebase is NoSQL based. There are very few cloud based server available which are similar to firebase [4].
@@ -182,3 +183,111 @@ The following dependencies were used in the project:
 >androidx.test.espresso:espresso-core:3.1.1
 >com.google.gms.google-services
 
+-Flutter(Application Design)-
+
+To simplify the process we will provide a separate page for each task. For every page that we need we will make a different code file and then piece them all together by calling them into a single main file. If we need to make a common function then we will create another file to develop the function. Keeping the function in separate files will allow us to call them when required without editing any variables and will also allow us to have a cleaner code and easier debugging. In case of running the application in debug mode we need a device to run the application on. Although we can emulate a device on the development PC itself it is better to have an external device, this will make the processing and the building of the application more efficient and faster. We can use external mobile phones running any recent version on android as an external device to run the application and test it.
+
+-Login Method-
+
+User will basically use their Google account to sign in. For the sign in method we will make a separate script and then call it into the main script in the end while building the application. In the sign in system we will have 2 separate methods consisting of sign in, sign out. Both these methods have a similar make and commands but their executions is mildly different. For the system we are required to use two packages:
+
+>package:firebase_auth/firebase_auth.dart – This package has functions that will allow the online database to register and locate the specific user.
+>package:google_sign_in/google_sign_in.dart – This package has methods that allow the use of android Google based sign in via their email and allow us to register the used id and email.
+
+To begin we will have to run the following command:
+		
+>final FirebaseAuth _auth = FirebaseAuth.instance;
+ 		
+This will authenticate the firebase to allocate users according to their email IDs. As soon as this command is called the application will await for a response from the google sign in method to allocate an email ID to the available string present.
+
+To initiate the google sign in we need to create a function like the following:
+
+
+>Future<String> signInWithGoogle() async {
+>  final GoogleSignInAccount =await googleSignIn.signIn();
+>  finalGoogleSignInAuthenticationgoogleSignInAuthentication=await GoogleSignInAccount.authentication;
+>  final AuthCredential credential = GoogleAuthProvider.getCredential(
+>    accessToken: googleSignInAuthentication.accessToken,
+>    idToken: googleSignInAuthentication.idToken,);
+>assert(user.email != null);
+>  assert(user.displayName != null);
+>  assert(user.photoUrl != null);
+
+>  assert(!user.isAnonymous);
+>  assert(await user.getIdToken() != null);
+
+The async statement allows the application to await reply from the user and the above statement will create a pop up that will allow the user to login to their gmail account. Once the user logs in to their account their email, display name and their profile photo is acquired and stored. It is checked that these are not null or empty. In case it is empty the method will send the process back to the top at the beginning of the process. Once the sign in is complete the process will have a user ID token, which will be unique to each user. We will assign the profile details to separate strings which will allow us to use them as text files.
+
+>final FirebaseUser currentUser = await _auth.currentUser(); 
+>assert(user.uid == currentUser.uid);
+
+The above statements will take the user ID and the ID token generated are set to the firebase statement which was awaiting before and will send the data to the database server. The second method that we need to implicate is the sign out method. This is a fairly simple method as compared to the sign in method. 
+
+>void signOutGoogle() async{await googleSignIn.signOut();
+
+The above statement will simply sign you out and clear the profile strings and basically reset the application. This will create our login/logout method. 
+
+-Profile Page-
+
+We will not discuss the planning of the application but rather we will talk about the important points like using the profile strings and connecting the sign out methods to the page and create a page switch in case of log out. After the planning and the basic page layout is created we can begin developing the page specific parts. First need to extract the image from the string. The image_URL string only provides us with a link to the image provided in the actual Gmail profile picture present in the users Gmail account. We can access that image via the URL and then flutter will build the application while down loading the image from the Gmail server. We need to following command to make the display widget.
+
+
+
+>CircleAvatar(
+>                backgroundImage: NetworkImage(
+>                  imageUrl,
+>                ),
+>                radius: 60,
+>                backgroundColor: Colors.transparent,
+>              ),
+
+Next, we need to use the other profile strings specifically the user name and the email strings. We got the information during log in and saved it in strings. To use these string its fairly simple as they can be simply considered as text files. This means we can create simple text widgets and just use the string and we will acquire the required output. We need the following command for that widget.
+
+>Text(
+>                name, //string name
+>                style: TextStyle(
+>                    fontSize: 25,
+>                    color: Colors.deepPurple,
+>                    fontWeight: FontWeight.bold),
+>              ),
+
+>Text(
+>                email, //text email
+>                style: TextStyle(
+>                    fontSize: 25,
+>                    color: Colors.deepPurple,
+>                    fontWeight: FontWeight.bold),
+>              ),
+
+
+To create the sign out button we need to create a button widget and give it and action effect and link it to the sign out method that we created before on the login method and then the application should push the user screen back to the login page We will use the following set of code for to create the button.
+
+>RaisedButton(
+                onPressed: () {
+	signOutGoogle(); 
+Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));
+                },
+
+Once we create this it will create a loop between the login and profile page. This will allow the user to login and logout safely and successfully and will allow the user to safely login and log out through the application itself and will not have to do it manually via their gmail. This finishes the Profile page
+
+
+-Login Page-
+
+We have created the methods for login in another dart file before so we will only have to call the method and design the UI for the login page the login page will be linked to the data page and the profile page has a push method. This page will not need many widgets, only the login option. The page can have other widgets and options but for the simplicity of the app we will give it a simple UI.
+
+>Widget _signInButton() {
+    return OutlineButton(
+      splashColor: Colors.grey,
+      onPressed: () {
+        signInWithGoogle().whenComplete(() {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return DataPage2();
+              },
+	     
+When the Log in method returns true the above method will push the page in view to the datapage. We will later add a side drawer which will send us to the profile page and hence the log out button. And in case the log in is a failure a simple message will pop up stating the same.
+
+-Data Page-
+
+For the data page we will have a decent UI made up of circular progress indicators and Bar Progress indicators. As a repository for these types of indicators is already available there is no need to create them from scratch using the paint creator methods. We can simply add the repository can call these functions to use them. As this page will be a little more complex as compared to the other pages we will need to plan the design properly or else the system will not be able to compile the application due to the parameters not being aligned properly with the desired screen size if this occurs there will be a red screen showing the error code and description on the device. First we need to set up a basic layout of the page
