@@ -1,5 +1,3 @@
-//sha 1 :5C:A9:BB:9A:F3:82:53:0C:22:A3:21:E7:AB:25:E2:E1:17:47:26:9E
-//sha 256 :B6:1C:06:65:1D:A2:4B:BA:D3:5E:2A:9A:D1:05:A1:7C:00:38:52:DB:03:BC:0C:15:FF:3E:1B:8F:E0:4A:2C:F1
 
 
 import 'package:firebase1/datapage.dart';
